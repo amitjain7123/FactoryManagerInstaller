@@ -31,13 +31,13 @@ namespace FactoryManagerInstaller
                             //MessageBox.Show("Add this Installer to startup and then Start SQL Installer");
                             
                             ExecuteAsAdmin(Common.currentFolder + @"Dependency\mysql-installer-community-5.7.16.0.msi");
-                            Thread.Sleep(10000);
-                            ExecuteAsAdmin(Common.currentFolder + @"Dependency\CRRuntime_64bit_13_0_32.msi");
                             break;
                         }
                     case 1: //Start Adding Database
                         {
                             //MessageBox.Show("Start Adding Database");
+                            ExecuteAsAdmin(Common.currentFolder + @"Dependency\CRRuntime_64bit_13_0_32.msi");
+
                             RunScripts.AddInitialData(Common.driver, Common.server);
                             break;
                         }
@@ -66,8 +66,9 @@ namespace FactoryManagerInstaller
             if (sequence == 0)
             {
                 mainUI.rtbText = "Please wait while database is being installed. Click Next once it is completed.";
-                //System.Threading.Thread.Sleep(10000);
-               // mainUI.NextButton.Visible = true;
+                System.Threading.Thread.Sleep(10000);
+                mainUI.NextButton.Visible = true;
+                return;
             }
             InstallAsPerSequence(sequence + 1);
         }
